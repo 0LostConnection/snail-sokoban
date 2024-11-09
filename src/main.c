@@ -1,5 +1,6 @@
 #include <stdio.h>
 
-void main() {
+int main() {
     printf("Tem que fazer ainda... :)");
+    return 0;
 }
