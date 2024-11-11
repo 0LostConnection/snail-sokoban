@@ -50,7 +50,7 @@ if(WIN32)
         endforeach()
 
         add_custom_command(TARGET clean_map_executables
-                COMMAND ${CMAKE_COMMAND} -E1 echo "Cleaning map executables..."
+                COMMAND ${CMAKE_COMMAND} -E echo "Cleaning map executables..."
                 COMMAND ${CMAKE_COMMAND} -E rm -f ${TEMP_EXECUTABLES}
                 COMMENT "Cleaning map executables..."
         )
