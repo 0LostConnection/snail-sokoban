@@ -1,9 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Build n' Run" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="snail_sokoban" TARGET_NAME="snail_sokoban.out" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="snail_sokoban" RUN_TARGET_NAME="snail_sokoban.out">
-    <method v="2">
-      <option name="CMake.Explicit.Target" predefinedTargetName="generate_maps" />
-      <option name="CMake.Explicit.Target" predefinedTargetName="clean_map_executables" />
-      <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-    </method>
-  </configuration>
-</component>
