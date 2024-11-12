@@ -12,6 +12,7 @@ set(DAT_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 # Localize os arquivos de fases na pasta maps
 file(GLOB MAP_SOURCES "src/maps/*.c")
 file(GLOB MAIN_SOURCES "src/*.c")
+file(GLOB MAIN_SOURCES "lib/*.h")
 
 add_executable(snail_sokoban ${MAIN_SOURCES})
 
