@@ -37,7 +37,7 @@ int main() {
 
     Player player = findPlayer(&map);
     while (!isGameWon(&map)) {
-        system("clear");
+        system("cls");
         printMap(&map, &player);
 
         char command = getUserInput();
