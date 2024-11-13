@@ -3,7 +3,7 @@
 
 #include "player.h"
 
-typedef enum Characters{
+typedef enum Characters {
     WALL = '#',
     BOX = 'x',
     PLAYER = 'p',
@@ -13,13 +13,13 @@ typedef enum Characters{
 } Characters;
 
 typedef struct map {
-    enum Characters** grid;
-    int nb_col;
-    int nb_lgn;
+    char **grid;
+    int height;
+    int width;
     Player player;
 } StrMap, *Map;
 
-Map initMap(const char* file_path);
+Map init_map(const char *file_path);
 
 void display_map(Map map);
 

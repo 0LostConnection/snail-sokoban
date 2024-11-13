@@ -1,23 +1,33 @@
 #include <stdio.h>
 
+#define HEIGHT 5
+#define WIDTH 7
+#define PLAYER_X 2
+#define PLAYER_Y 2
+
 int main() {
-    int width = 4, height = 4;
-    int p_x = 2, p_y = 2;
-    char grid[4][4] = {
-        {'#', '#', '#', '#'},
-        {'#', ' ', ' ', '#'},
-        {'#', ' ', ' ', '#'},
-        {'#', '#', '#', '#'},
+    char grid[HEIGHT][WIDTH] = {
+        {'#', '#', '#', '#', '#', '#', '#'},
+        {'#', ' ', ' ', ' ', ' ', ' ', '#'},
+        {'#', ' ', '@', ' ', ' ', ' ', '#'},
+        {'#', ' ', '.', ' ', ' ', ' ', '#'},
+        {'#', '#', '#', '#', '#', '#', '#'}
     };
 
     FILE *file = fopen("fase1.dat", "wb");
+
+    const int width = WIDTH;
+    const int height = HEIGHT;
+    const int playerX = PLAYER_X;
+    const int playerY = PLAYER_Y;
+
     fwrite(&width, sizeof(int), 1, file);
     fwrite(&height, sizeof(int), 1, file);
-    fwrite(&p_x, sizeof(int), 1, file);
-    fwrite(&p_y, sizeof(int), 1, file);
-    for (int i = 0; i < height; i++) {
-        fwrite(grid[i], sizeof(char), width, file);
-    }
+    fwrite(&playerX, sizeof(int), 1, file);
+    fwrite(&playerY, sizeof(int), 1, file);
+
+    fwrite(grid, sizeof(char), width * height, file);
+
     fclose(file);
 
     return 0;

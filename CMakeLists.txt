@@ -12,11 +12,26 @@ set(DAT_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 # Localize os arquivos de fases na pasta maps
 file(GLOB MAP_SOURCES "src/maps/*.c")
 file(GLOB MAIN_SOURCES "src/*.c")
-file(GLOB MAIN_SOURCES "lib/*.h")
 
-add_executable(snail_sokoban ${MAIN_SOURCES}
-        src/map.c
-        src/base.c)
+add_compile_options(-Wall)
+
+# Configuração manual para ncurses em Windows
+if(WIN32)
+        # Defina manualmente os diretórios de include e biblioteca de ncurses
+        include_directories("C:/MinGW/include/ncurses")  # Altere para o caminho correto do seu ncurses
+        link_directories("C:/MinGW/lib")  # Altere para o caminho correto da biblioteca ncurses
+        set(CURSES_LIBRARIES ncurses)     # Defina o nome da biblioteca
+else()
+        # Linux ou outros sistemas podem usar o find_package normalmente
+        find_package(Curses REQUIRED)
+        include_directories(${CURSES_INCLUDE_DIR})
+        set(CURSES_LIBRARIES ${CURSES_LIBRARIES})
+endif()
+
+# Adiciona o executável principal e linka com a biblioteca curses
+add_executable(snail_sokoban ${MAIN_SOURCES})
+target_link_libraries(snail_sokoban ${CURSES_LIBRARIES})
+
 
 # Adiciona uma regra personalizada para gerar os arquivos .dat das fases
 add_custom_target(generate_maps ALL
@@ -26,15 +41,8 @@ add_custom_target(generate_maps ALL
 # Para cada arquivo de fase, adicionamos uma regra para compilar e executá-lo
 foreach(MAP_SOURCE ${MAP_SOURCES})
         get_filename_component(MAP_NAME ${MAP_SOURCE} NAME_WE)
-
-        # Adiciona cada executável temporário para compilar e executar
-        add_executable(${MAP_NAME}_gen ${MAP_SOURCE}
-                lib/base.h
-                src/main.c
-                src/operation.c)
+        add_executable(${MAP_NAME}_gen ${MAP_SOURCE})
         add_dependencies(generate_maps ${MAP_NAME}_gen)
-
-        # Adiciona o comando para gerar o arquivo .dat
         add_custom_command(TARGET ${MAP_NAME}_gen POST_BUILD
                 COMMAND $<TARGET_FILE:${MAP_NAME}_gen>
                 WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin
@@ -49,24 +57,20 @@ add_custom_target(clean_map_executables
 
 # Comando para remover os executáveis temporários com compatibilidade para Windows e Linux
 if(WIN32)
-        # Adiciona os executáveis temporários à limpeza
         foreach(MAP_SOURCE ${MAP_SOURCES})
                 get_filename_component(MAP_NAME ${MAP_SOURCE} NAME_WE)
                 list(APPEND TEMP_EXECUTABLES "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${MAP_NAME}_gen.exe")
         endforeach()
-
         add_custom_command(TARGET clean_map_executables
                 COMMAND ${CMAKE_COMMAND} -E echo "Cleaning map executables..."
                 COMMAND ${CMAKE_COMMAND} -E rm -f ${TEMP_EXECUTABLES}
                 COMMENT "Cleaning map executables..."
         )
 else()
-        # Adiciona os executáveis temporários à limpeza
         foreach(MAP_SOURCE ${MAP_SOURCES})
                 get_filename_component(MAP_NAME ${MAP_SOURCE} NAME_WE)
                 list(APPEND TEMP_EXECUTABLES ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${MAP_NAME}_gen)
         endforeach()
-
         add_custom_command(TARGET clean_map_executables
                 COMMAND ${CMAKE_COMMAND} -E echo "Cleaning map executables..."
                 COMMAND ${CMAKE_COMMAND} -E rm -f ${TEMP_EXECUTABLES}
@@ -74,6 +78,5 @@ else()
         )
 endif()
 
-# Compila o jogo principal após gerar as fases e limpar os executáveis
 add_dependencies(snail_sokoban clean_map_executables)
 add_dependencies(clean_map_executables generate_maps)
