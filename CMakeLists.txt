@@ -14,7 +14,9 @@ file(GLOB MAP_SOURCES "src/maps/*.c")
 file(GLOB MAIN_SOURCES "src/*.c")
 file(GLOB MAIN_SOURCES "lib/*.h")
 
-add_executable(snail_sokoban ${MAIN_SOURCES})
+add_executable(snail_sokoban ${MAIN_SOURCES}
+        src/map.c
+        src/base.c)
 
 # Adiciona uma regra personalizada para gerar os arquivos .dat das fases
 add_custom_target(generate_maps ALL
@@ -26,7 +28,10 @@ foreach(MAP_SOURCE ${MAP_SOURCES})
         get_filename_component(MAP_NAME ${MAP_SOURCE} NAME_WE)
 
         # Adiciona cada executável temporário para compilar e executar
-        add_executable(${MAP_NAME}_gen ${MAP_SOURCE})
+        add_executable(${MAP_NAME}_gen ${MAP_SOURCE}
+                lib/base.h
+                src/main.c
+                src/operation.c)
         add_dependencies(generate_maps ${MAP_NAME}_gen)
 
         # Adiciona o comando para gerar o arquivo .dat

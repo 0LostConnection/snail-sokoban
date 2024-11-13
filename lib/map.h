@@ -4,7 +4,11 @@
 #include "player.h"
 
 typedef enum Characters{
+    WALL = '#',
+    BOX = 'x',
     PLAYER = 'p',
+    OPEN_GOAL = 'o',
+    CLOSED_GOAL = '*',
     NONE = ' '
 } Characters;
 
@@ -15,7 +19,7 @@ typedef struct map {
     Player player;
 } StrMap, *Map;
 
-Map initMap(const char* file_path, int level);
+Map initMap(const char* file_path);
 
 void display_map(Map map);
 
