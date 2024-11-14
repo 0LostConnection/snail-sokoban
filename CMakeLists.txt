@@ -6,9 +6,6 @@ set(CMAKE_C_STANDARD 11)
 # Define o diretório de saída para os executáveis
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-# Define o diretório de saída para os arquivos .dat
-set(DAT_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
 # Localize os arquivos de fases na pasta maps
 file(GLOB MAP_SOURCES "src/maps/*.c")
 file(GLOB MAIN_SOURCES "src/*.c")
