@@ -5,13 +5,15 @@
 
 #define Bool bool
 
-#define TITLE_LEVEL 0
-#define FIRST_LEVEL 1
-#define SECOND_LEVEL 2
-#define THIRD_LEVEL 3
-#define FOURTH_LEVEL 4
-#define FIFTH_LEVEL 5
-#define MAX_LEVEL 5
+typedef enum LEVELS {
+    TITLE_LEVEL = 0,
+    FIRST_LEVEL = 1,
+    SECOND_LEVEL = 2,
+    THIRD_LEVEL = 3,
+    FOURTH_LEVEL = 4,
+    FIFTH_LEVEL = 5,
+    MAX_LEVEL = 5
+} LEVELS ;
 
 #define TC_NRM  "\033[0m"
 #define TC_RED  "\033[1;31m"

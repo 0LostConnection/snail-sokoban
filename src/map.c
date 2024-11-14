@@ -51,6 +51,8 @@ void display_map(Map map) {
                 printf("%s%c%s", TC_MAG, BOX, TC_NRM);
             } else if (map->grid[i][j] == WALL) {
                 printf("%s%c%s", TC_BLU, WALL, TC_NRM);
+            } else if (map->grid[i][j] == PLAYER) {
+                printf("%s%c%s", TC_GRN, PLAYER, TC_NRM);
             } else {
                 printf("%c", map->grid[i][j]);
             }

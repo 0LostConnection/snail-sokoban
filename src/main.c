@@ -1,6 +1,7 @@
 #include "../lib/base.h"
 #include "../lib/map.h"
 #include "../lib/command.h"
+#include "../lib/score.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -9,7 +10,7 @@
 int main() {
     clear_screen();
 
-    int current_level = TITLE_LEVEL;
+    LEVELS current_level = TITLE_LEVEL;
     Bool quit = false;
     char input;
     Map map = init_map(current_level);
@@ -25,7 +26,16 @@ int main() {
     char msg[100] = "Bem-Vindo(a)!";
     move_cursor((int) ((cols - strlen(msg)) / 2), (int) rows / 4);
     printf("%s%s%s%s%s", BOLD, WHT_ON_RED, msg, TC_NRM, NORMAL);
+
     display_map(map);
+
+    LEVELS score = load_score();
+
+    sprintf(msg, "Voce parou na fase %d! Pressione [c] para apagar os dados", score);
+
+    get_cols_rows(&cols, &rows);
+    move_cursor(((int) (cols - strlen(msg)) / 2), rows / 4 + map->height + 4);
+    printf("%s%s%s%s%s", BOLD, WHT_ON_RED, msg, TC_NRM, NORMAL);
 
     endwin();
 
@@ -49,8 +59,12 @@ int main() {
         case '5':
             current_level = FIFTH_LEVEL;
             break;
-        default:
+        case 'c':
+            save_score(FIRST_LEVEL);
             current_level = FIRST_LEVEL;
+            break;
+        default:
+            current_level = score;
             break;
     }
 
@@ -134,8 +148,10 @@ int main() {
                 break;
             }
 
-            clear_screen();
+            score = current_level;
+            save_score(score);
 
+            clear_screen();
             char next_level_question[] =
                     "Voce venceu! Deseja ir para a proxima fase ou sair? [q]";
 
