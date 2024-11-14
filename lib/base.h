@@ -13,7 +13,7 @@ typedef enum LEVELS {
     FOURTH_LEVEL = 4,
     FIFTH_LEVEL = 5,
     MAX_LEVEL = 5
-} LEVELS ;
+} LEVELS;
 
 #define TC_NRM  "\033[0m"
 #define TC_RED  "\033[1;31m"
@@ -50,5 +50,9 @@ void move_cursor(int x, int y);
 
 // Função para obter tamanho do terminal no Windows
 void get_cols_rows(int *cols, int *rows);
+
+void print_header(char *message, int cols, int rows);
+
+void print_footer(char *message, int cols, int rows, int map_height);
 
 #endif

@@ -35,10 +35,11 @@ void display_map(Map map) {
     int cols = 0;
     int rows = 0;
     int i;
+
     get_cols_rows(&cols, &rows);
 
     for (i = 0; i < map->height; i++) {
-        move_cursor((int) (cols / 2 - map->width / 2), (int) rows / 3 + i);
+        move_cursor(((cols - map->width) / 2), rows / 3 + i);
 
         for (int j = 0; j < map->width; j++) {
             if (map->grid[i][j] == CLOSED_GOAL) {
@@ -59,7 +60,7 @@ void display_map(Map map) {
         }
         putchar('\n');
     }
-    move_cursor((int) (cols / 2 - 6), (int) rows / 3 + i + 1);
+    move_cursor((cols / 2 - 6), rows / 3 + i + 1);
 }
 
 void free_map(Map map) {
