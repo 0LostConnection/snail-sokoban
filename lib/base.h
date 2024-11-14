@@ -36,18 +36,9 @@
 void clear_screen();
 
 // Função para mover o cursor no console do Windows
-void tc_move_cursor(int x, int y);
+void move_cursor(int x, int y);
 
 // Função para obter tamanho do terminal no Windows
-void tc_get_cols_rows(int *cols, int *rows);
-
-// Função para desativar o echo do terminal no Windows
-void tc_echo_off();
-
-// Função para ativar o echo do terminal no Windows
-void tc_echo_on();
-
-// Função para definir cores no console do Windows
-void set_text_color(int color);
+void get_cols_rows(int *cols, int *rows);
 
 #endif

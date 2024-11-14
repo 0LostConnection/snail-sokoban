@@ -6,7 +6,7 @@
 typedef enum Characters {
     WALL = '#',
     BOX = 'x',
-    PLAYER = 'p',
+    PLAYER = '@',
     OPEN_GOAL = 'o',
     CLOSED_GOAL = '*',
     NONE = ' '
