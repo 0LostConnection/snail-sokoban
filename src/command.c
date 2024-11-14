@@ -60,7 +60,7 @@ Bool move_box(Map map, Command d, int x, int y) {
             y++;
             break;
     }
-    if (!hit_wall(map, d, x, y)) {
+    if (!hit_wall(map, d, x, y) && !hit_box(map, d, x, y)) {
         if (map->grid[y][x] == OPEN_GOAL) {
             map->grid[y][x] = CLOSED_GOAL;
         } else {
@@ -100,6 +100,13 @@ Bool hit_wall(Map map, Command d, int x, int y) {
     return false;
 }
 
+Bool hit_box(Map map, Command d, int x, int y) {
+    if (map->grid[y][x] == BOX) {
+        return true;
+    }
+    return false;
+}
+
 Bool check_for_full_goal(Map map) {
     for (int i = 0; i < map->height; i++) {
         for (int j = 0; j < map->width; j++) {
@@ -114,11 +121,6 @@ Bool check_for_full_goal(Map map) {
 void end_game(char *msg) {
     clear_screen();
 
-    initscr();
-    cbreak();
-    noecho();
-    timeout(-1);
-
     int cols = 0;
     int rows = 0;
     get_cols_rows(&cols, &rows);
@@ -126,6 +128,9 @@ void end_game(char *msg) {
 
     printf("%s%s%s%s%s\n", BOLD, WHT_ON_RED, msg, TC_NRM, NORMAL);
 
-    getchar();
     endwin();
+
+    noecho();
+    cbreak();
+    getchar();
 }

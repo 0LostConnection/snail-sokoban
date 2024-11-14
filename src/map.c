@@ -5,7 +5,11 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-Map init_map(const char *file_path) {
+Map init_map(int current_level) {
+    // Cria o caminho do arquivo com o número da fase
+    char file_path[20];
+    sprintf(file_path, "fase%d.dat", current_level);
+
     FILE *file = fopen(file_path, "rb");
     if (!file) return NULL;
 
@@ -54,4 +58,17 @@ void display_map(Map map) {
         putchar('\n');
     }
     move_cursor((int) (cols / 2 - 6), (int) rows / 3 + i + 1);
+}
+
+void free_map(Map map) {
+    if (map != NULL) {
+        // Libera cada linha da grid
+        for (int i = 0; i < map->height; i++) {
+            free(map->grid[i]);
+        }
+        // Libera o array de ponteiros da grid
+        free(map->grid);
+        // Libera a estrutura map
+        free(map);
+    }
 }

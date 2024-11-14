@@ -19,8 +19,10 @@ typedef struct map {
     Player player;
 } StrMap, *Map;
 
-Map init_map(const char *file_path);
+Map init_map(int current_level);
 
 void display_map(Map map);
+
+void free_map(Map map);
 
 #endif

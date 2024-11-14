@@ -5,6 +5,14 @@
 
 #define Bool bool
 
+#define TITLE_LEVEL 0
+#define FIRST_LEVEL 1
+#define SECOND_LEVEL 2
+#define THIRD_LEVEL 3
+#define FOURTH_LEVEL 4
+#define FIFTH_LEVEL 5
+#define MAX_LEVEL 5
+
 #define TC_NRM  "\033[0m"
 #define TC_RED  "\033[1;31m"
 #define TC_GRN  "\033[1;32m"
