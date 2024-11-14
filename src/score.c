@@ -1,20 +1,30 @@
-#include "score.h"
-#include <stdio.h>
+#include "../lib/score.h"
+#include "../lib/base.h"
 
-int loadScore() {
-    FILE *file = fopen("score.dat", "rb");
-    int score = 1;
-    if (file) {
-        fread(&score, sizeof(int), 1, file);
-        fclose(file);
+#include <stdio.h>
+#include <stdlib.h>
+
+int load_score() {
+    LEVELS unlocked_level;
+    FILE *score_file = fopen("score.dat", "rb");
+
+    if (score_file == NULL) {
+        fclose(score_file);
+        save_score(FIRST_LEVEL);
+        unlocked_level = FIRST_LEVEL;
     }
-    return score;
+
+    fread(&unlocked_level, sizeof(int), 1, score_file);
+    fclose(score_file);
+
+    return unlocked_level;
 }
 
-void saveScore(int score) {
-    FILE *file = fopen("score.dat", "wb");
-    if (file) {
-        fwrite(&score, sizeof(int), 1, file);
-        fclose(file);
+void save_score(LEVELS unlocked_level) {
+    FILE *score_file = fopen("score.dat", "wb");
+
+    if (score_file) {
+        fwrite(&unlocked_level, sizeof(int), 1, score_file);
+        fclose(score_file);
     }
 }

@@ -15,7 +15,7 @@ int main() {
         {'#', '#', '#', '#', '#', '#', '#'}
     };
 
-    FILE *file = fopen("fase1.dat", "wb");
+    FILE *file = fopen("fase5.dat", "wb");
 
     const int width = WIDTH;
     const int height = HEIGHT;
