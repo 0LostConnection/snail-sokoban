@@ -34,7 +34,7 @@ int main() {
     print_footer(title_footer, cols, rows, map->height);
 
     endwin();
-  
+
     noecho();
     cbreak();
     input = getchar();
