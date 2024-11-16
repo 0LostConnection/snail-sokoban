@@ -1,18 +1,24 @@
 #include <stdio.h>
 
-#define HEIGHT 6
-#define WIDTH 7
-#define PLAYER_X 2
-#define PLAYER_Y 2
+#define HEIGHT 12
+#define WIDTH 22
+#define PLAYER_X 8
+#define PLAYER_Y 5
 
 int main() {
     char grid[HEIGHT][WIDTH] = {
-        {'#', '#', '#', '#', '#', '#', '#'},
-        {'#', ' ', ' ', ' ', ' ', ' ', '#'},
-        {'#', ' ', ' ', 'x', 'o', ' ', '#'},
-        {'#', ' ', ' ', 'x', 'o', ' ', '#'},
-        {'#', ' ', ' ', ' ', ' ', ' ', '#'},
-        {'#', '#', '#', '#', '#', '#', '#'}
+        "######################",
+        "######################",
+        "##       ##       o ##",
+        "##   x   ##  x########",
+        "##            ########",
+        "##  ##    ##        ##",
+        "##o ##        x     ##",
+        "######              ##",
+        "######   ##   ###   ##",
+        "##o      ##   ###   ##",
+        "######################",
+        "######################"
     };
 
     FILE *file = fopen("fase1.dat", "wb");
@@ -27,7 +33,9 @@ int main() {
     fwrite(&playerX, sizeof(int), 1, file);
     fwrite(&playerY, sizeof(int), 1, file);
 
-    fwrite(grid, sizeof(char), width * height, file);
+    for (int i = 0; i < HEIGHT; i++) {
+        fwrite(grid[i], sizeof(char), WIDTH, file);
+    }
 
     fclose(file);
 

@@ -6,7 +6,7 @@
 #define PLAYER_Y -10
 
 int main() {
-    char grid[HEIGHT][WIDTH + 1] = {
+    char grid[HEIGHT][WIDTH] = {
         " ######   ##    ##     @@@     @@@@  ##      ",
         "##    ##  ###   ##    @@ @@     @@   ##      ",
         "##        ####  ##   @@   @@    @@   ##      ",

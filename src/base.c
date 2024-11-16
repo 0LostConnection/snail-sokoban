@@ -33,3 +33,13 @@ void print_footer(char *message, int cols, int rows, int map_height) {
     move_cursor(((int) (cols - strlen(message)) / 2), rows / 4 + map_height + 5);
     printf("%s%s%s%s%s", BOLD, WHT_ON_RED, message, TC_NRM, NORMAL);
 }
+
+void show_cursor(bool flag) {
+    HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    CONSOLE_CURSOR_INFO cursorInfo;
+
+    GetConsoleCursorInfo(out, &cursorInfo);
+    cursorInfo.bVisible = flag; // set the cursor visibility
+    SetConsoleCursorInfo(out, &cursorInfo);
+}

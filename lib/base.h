@@ -55,4 +55,6 @@ void print_header(char *message, int cols, int rows);
 
 void print_footer(char *message, int cols, int rows, int map_height);
 
+void show_cursor(bool flag);
+
 #endif

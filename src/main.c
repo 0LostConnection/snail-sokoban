@@ -9,6 +9,7 @@
 
 int main() {
     clear_screen();
+    show_cursor(false);
 
     LEVELS current_level = TITLE_LEVEL;
     Bool quit = false;
@@ -89,7 +90,7 @@ int main() {
         input = getchar();
         endwin();
 
-        clear_screen();
+        //clear_screen();
         display_map(map);
 
         switch (input) {
