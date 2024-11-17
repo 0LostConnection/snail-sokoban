@@ -51,19 +51,19 @@ int main() {
     input = getchar();
 
     switch (input) {
-        case FIRST_LEVEL:
+        case '1':
             current_level = FIRST_LEVEL;
             break;
-        case SECOND_LEVEL:
+        case '2':
             current_level = SECOND_LEVEL;
             break;
-        case THIRD_LEVEL:
+        case '3':
             current_level = THIRD_LEVEL;
             break;
-        case FOURTH_LEVEL:
+        case '4':
             current_level = FOURTH_LEVEL;
             break;
-        case FIFTH_LEVEL:
+        case '5':
             current_level = FIFTH_LEVEL;
             break;
         case CLEAR:
