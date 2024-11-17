@@ -28,10 +28,20 @@ int main() {
     display_map(map);
 
     LEVELS score = load_score();
-    LEVELS old_score = score;
 
     char title_footer[100];
-    sprintf(title_footer, "Voce conseguiu ate a fase %d! Pressione [c] para apagar os dados", score);
+    switch (score) {
+        case TITLE_LEVEL:
+            strcpy(title_footer, "Pressione qualquer tecla para iniciar");
+            break;
+        case MAX_LEVEL:
+            strcpy(title_footer, "Voce venceu! Pressione [c] para apagar os dados");
+            break;
+        default:
+            sprintf(title_footer, "Voce conseguiu ate a fase %d! Pressione [c] para apagar os dados", score);
+            break;
+    }
+
     print_footer(title_footer, cols, rows, map->height);
 
     endwin();
@@ -41,27 +51,35 @@ int main() {
     input = getchar();
 
     switch (input) {
-        case '1':
+        case FIRST_LEVEL:
             current_level = FIRST_LEVEL;
             break;
-        case '2':
+        case SECOND_LEVEL:
             current_level = SECOND_LEVEL;
             break;
-        case '3':
+        case THIRD_LEVEL:
             current_level = THIRD_LEVEL;
             break;
-        case '4':
+        case FOURTH_LEVEL:
             current_level = FOURTH_LEVEL;
             break;
-        case '5':
+        case FIFTH_LEVEL:
             current_level = FIFTH_LEVEL;
             break;
-        case 'c':
-            save_score(FIRST_LEVEL);
+        case CLEAR:
+            score = TITLE_LEVEL;
+            save_score(score);
             current_level = FIRST_LEVEL;
             break;
-        case 'w':
-            current_level = score;
+        case CONTINUE:
+            if (score == TITLE_LEVEL) {
+                current_level = FIRST_LEVEL;
+            } else {
+                current_level = score;
+            }
+            break;
+        case QUIT:
+            quit = true;
             break;
         default:
             current_level = FIRST_LEVEL;
@@ -84,14 +102,11 @@ int main() {
         print_header(level_header, cols, rows);
 
         char level_footer[100];
-        sprintf(level_footer, "Maximo: %d", old_score);
+        sprintf(level_footer, "Maximo: %d", score);
         print_footer(level_footer, cols, rows, map->height);
 
         input = getchar();
         endwin();
-
-        //clear_screen();
-        display_map(map);
 
         switch (input) {
             case UP:
@@ -110,12 +125,12 @@ int main() {
                 move_player(map, RIGHT);
                 endwin();
                 break;
-            case 'q':
+            case QUIT:
                 quit = true;
                 printf("Quit\n");
                 endwin();
                 break;
-            case 'r':
+            case RESTART:
                 free_map(map);
                 map = init_map(current_level);
                 if (map == NULL) {

@@ -15,6 +15,18 @@ typedef enum LEVELS {
     MAX_LEVEL = 5
 } LEVELS;
 
+
+typedef enum Command {
+    UP = 'w',       ///< w: up
+    LEFT = 'a',     ///< a: left
+    DOWN = 's',     ///< s: down
+    RIGHT = 'd',    ///< d: right
+    RESTART = 'r',  ///< r: restart
+    QUIT = 'q',     ///< q: quit
+    CLEAR = 'C',    ///< c: clear
+    CONTINUE = 'w'  ///< w: continue
+} Command;
+
 #define TC_NRM  "\033[0m"
 #define TC_RED  "\033[1;31m"
 #define TC_GRN  "\033[1;32m"

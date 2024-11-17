@@ -10,8 +10,8 @@ int load_score() {
 
     if (score_file == NULL) {
         fclose(score_file);
-        save_score(FIRST_LEVEL);
-        unlocked_level = FIRST_LEVEL;
+        save_score(TITLE_LEVEL);
+        return TITLE_LEVEL;
     }
 
     fread(&unlocked_level, sizeof(int), 1, score_file);
