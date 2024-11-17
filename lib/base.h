@@ -23,7 +23,7 @@ typedef enum Command {
     RIGHT = 'd',    ///< d: right
     RESTART = 'r',  ///< r: restart
     QUIT = 'q',     ///< q: quit
-    CLEAR = 'C',    ///< c: clear
+    CLEAR = 'c',    ///< c: clear
     CONTINUE = 'w'  ///< w: continue
 } Command;
 
