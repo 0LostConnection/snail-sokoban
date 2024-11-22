@@ -50,6 +50,8 @@ int main() {
     cbreak();
     input = getchar();
 
+    //ESCOLHER A FASE
+
     switch (input) {
         case '1':
             current_level = FIRST_LEVEL;
@@ -88,7 +90,7 @@ int main() {
 
     clear_screen();
     map = init_map(current_level);
-
+    
     while (!quit) {
         initscr();
         cbreak();
