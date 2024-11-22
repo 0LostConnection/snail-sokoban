@@ -8,201 +8,152 @@
 #include <ncurses/ncurses.h>
 
 int main() {
-    clear_screen();
-    show_cursor(false);
+    Bool quit_game = false;
 
-    LEVELS current_level = TITLE_LEVEL;
-    Bool quit = false;
-    char input;
-    Map map = init_map(current_level);
-    int cols = 0;
-    int rows = 0;
+    while (!quit_game) {
+        clear_screen();
+        show_cursor(false);
 
-    initscr();
-    cbreak();
-    noecho();
-    timeout(-1);
+        LEVELS current_level = TITLE_LEVEL;
+        Bool quit_level = false;
+        char input;
+        Map map = init_map(current_level);
+        int cols = 0;
+        int rows = 0;
 
-    print_header("Bem-Vindo(a)!", cols, rows);
-
-    display_map(map);
-
-    LEVELS score = load_score();
-
-    char title_footer[100];
-    switch (score) {
-        case TITLE_LEVEL:
-            strcpy(title_footer, "Pressione qualquer tecla para iniciar");
-            break;
-        case MAX_LEVEL:
-            strcpy(title_footer, "Voce venceu! Pressione [c] para apagar os dados");
-            break;
-        default:
-            sprintf(title_footer, "Voce conseguiu ate a fase %d! Pressione [c] para apagar os dados", score + 1);
-            break;
-    }
-
-    print_footer(title_footer, cols, rows, map->height);
-
-    endwin();
-
-    noecho();
-    cbreak();
-    input = getchar();
-
-    //ESCOLHER A FASE
-
-    switch (input) {
-        case '1':
-            current_level = FIRST_LEVEL;
-            break;
-        case '2':
-            current_level = SECOND_LEVEL;
-            break;
-        case '3':
-            current_level = THIRD_LEVEL;
-            break;
-        case '4':
-            current_level = FOURTH_LEVEL;
-            break;
-        case '5':
-            current_level = FIFTH_LEVEL;
-            break;
-        case '6':
-            current_level = SIXTH_LEVEL;
-            break;
-        case '7':
-            current_level = SEVENTH_LEVEL;
-            break;
-        case '8':
-            current_level = EIGHT_LEVEL;
-            break;
-        case '9':
-            current_level = NINE_LEVEL;
-            break;
-        case '0':
-            current_level = TENTH_LEVEL;
-            break;
-
-        case CLEAR:
-            score = TITLE_LEVEL;
-            save_score(score);
-            current_level = FIRST_LEVEL;
-            break;
-        case CONTINUE:
-            if (score == TITLE_LEVEL) {
-                current_level = FIRST_LEVEL;
-            } else {
-                current_level = score;
-            }
-            break;
-        case QUIT:
-            quit = true;
-            break;
-        default:
-            current_level = FIRST_LEVEL;
-            break;
-    }
-
-    clear_screen();
-    map = init_map(current_level);
-
-    while (!quit) {
+        // MENU INICIAL
         initscr();
         cbreak();
         noecho();
         timeout(-1);
 
+        print_header("Bem-Vindo(a)!", cols, rows);
+
         display_map(map);
 
-        char level_header[20];
-        sprintf(level_header, "Level %d", current_level + 1);
-        print_header(level_header, cols, rows);
-
-        char level_footer[100];
-        sprintf(level_footer, "Maximo: %d", score + 1);
-        print_footer(level_footer, cols, rows, map->height);
-
-        input = getchar();
-        endwin();
-
-        switch (input) {
-            case UP:
-                move_player(map, UP);
-                endwin();
+        LEVELS score = load_score();
+        char title_footer[100];
+        switch (score) {
+            case TITLE_LEVEL:
+                strcpy(title_footer, "Pressione qualquer tecla para iniciar");
                 break;
-            case LEFT:
-                move_player(map, LEFT);
-                endwin();
-                break;
-            case DOWN:
-                move_player(map, DOWN);
-                endwin();
-                break;
-            case RIGHT:
-                move_player(map, RIGHT);
-                endwin();
-                break;
-            case QUIT:
-                quit = true;
-                printf("Quit\n");
-                endwin();
-                break;
-            case RESTART:
-                free_map(map);
-                map = init_map(current_level);
-                if (map == NULL) {
-                    // Verificação para garantir que o mapa foi carregado
-                    quit = true;
-                    printf("Erro ao reiniciar a fase. Encerrando...\n");
-                } else {
-                    display_map(map);
-                }
-                endwin();
+            case MAX_LEVEL:
+                strcpy(title_footer, "Voce venceu! Pressione [c] para apagar os dados");
                 break;
             default:
-                endwin();
+                sprintf(title_footer, "Voce conseguiu ate a fase %d! [c] para apagar os dados", score + 1);
                 break;
         }
 
-        if (!quit && check_for_full_goal(map)) {
-            score = current_level;
-            save_score(score);
+        print_footer(title_footer, cols, rows, map->height);
 
-            current_level++;
+        endwin();
 
-            if (current_level > MAX_LEVEL) {
-                end_game("You Win!");
-                free_map(map);
+        noecho();
+        cbreak();
+        input = getchar();
+
+        switch (input) {
+            case '1': current_level = FIRST_LEVEL;
                 break;
-            }
-            
-            clear_screen();
+            case '2': current_level = SECOND_LEVEL;
+                break;
+            case '3': current_level = THIRD_LEVEL;
+                break;
+            case '4': current_level = FOURTH_LEVEL;
+                break;
+            case '5': current_level = FIFTH_LEVEL;
+                break;
+            case '6': current_level = SIXTH_LEVEL;
+                break;
+            case '7': current_level = SEVENTH_LEVEL;
+                break;
+            case '8': current_level = EIGHT_LEVEL;
+                break;
+            case '9': current_level = NINE_LEVEL;
+                break;
+            case '0': current_level = TENTH_LEVEL;
+                break;
+            case CLEAR:
+                score = TITLE_LEVEL;
+                save_score(score);
+                current_level = FIRST_LEVEL;
+                break;
+            case QUIT:
+                quit_game = true;
+                continue;
+            default:
+                current_level = FIRST_LEVEL;
+                break;
+        }
 
-            print_header("Voce venceu! Deseja ir para a proxima fase ou sair? [q]", cols, rows);
+        clear_screen();
+        map = init_map(current_level);
+        if (!map) {
+            printf("Erro ao carregar o mapa.\n");
+            quit_game = true;
+            continue;
+        }
 
+        // LOOP DO JOGO
+        while (!quit_level && !quit_game) {
+            initscr();
+            cbreak();
+            noecho();
+            timeout(-1);
+
+            display_map(map);
+
+            char level_header[20];
+            sprintf(level_header, "Level %d", current_level + 1);
+            print_header(level_header, cols, rows);
+
+            char level_footer[100];
+            sprintf(level_footer, "Maximo: %d", score + 1);
+            print_footer(level_footer, cols, rows, map->height);
+
+            input = getchar();
             endwin();
 
-            noecho();
-            cbreak();
-            input = getchar();
+            switch (input) {
+                case UP: move_player(map, UP);
+                    break;
+                case LEFT: move_player(map, LEFT);
+                    break;
+                case DOWN: move_player(map, DOWN);
+                    break;
+                case RIGHT: move_player(map, RIGHT);
+                    break;
+                case RESTART:
+                    free_map(map);
+                    map = init_map(current_level);
+                    break;
+                case QUIT:
+                    quit_level = true;
+                    break;
+                case BACK_TO_MENU: // Defina BACK_TO_MENU como a tecla desejada para voltar ao menu
+                    quit_level = true;
+                    break;
+                default:
+                    break;
+            }
 
-            if (input != 'q') {
-                clear_screen();
+            if (!quit_level && check_for_full_goal(map)) {
+                score = current_level;
+                save_score(score);
 
-                sprintf(level_header, "Level %d", current_level);
-                print_header(level_header, cols, rows);
-
-                map = init_map(current_level);
-                display_map(map);
-
-                endwin();
-            } else {
-                quit = true;
-                free_map(map);
-                endwin();
+                current_level++;
+                if (current_level > MAX_LEVEL) {
+                    end_game("You Win!");
+                    quit_level = true;
+                } else {
+                    free_map(map);
+                    map = init_map(current_level);
+                }
             }
         }
+
+        free_map(map);
     }
 
     endwin();

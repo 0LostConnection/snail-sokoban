@@ -22,14 +22,15 @@ typedef enum LEVELS {
 
 
 typedef enum Command {
-    UP = 'w', ///< w: up
-    LEFT = 'a', ///< a: left
-    DOWN = 's', ///< s: down
-    RIGHT = 'd', ///< d: right
-    RESTART = 'r', ///< r: restart
-    QUIT = 'q', ///< q: quit
-    CLEAR = 'c', ///< c: clear
-    CONTINUE = 'w' ///< w: continue
+    UP = 'w',
+    LEFT = 'a',
+    DOWN = 's',
+    RIGHT = 'd',
+    RESTART = 'r',
+    QUIT = 'q',
+    CLEAR = 'c',
+    CONTINUE = 'w',
+    BACK_TO_MENU = 'm'
 } Command;
 
 #define TC_NRM  "\033[0m"
