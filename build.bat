@@ -41,5 +41,5 @@ del %BIN_DIR%\*_gen.exe
 
 echo Build complete.
 
-pause
+:: pause
 endlocal
