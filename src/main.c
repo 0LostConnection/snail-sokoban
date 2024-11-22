@@ -38,7 +38,7 @@ int main() {
             strcpy(title_footer, "Voce venceu! Pressione [c] para apagar os dados");
             break;
         default:
-            sprintf(title_footer, "Voce conseguiu ate a fase %d! Pressione [c] para apagar os dados", score);
+            sprintf(title_footer, "Voce conseguiu ate a fase %d! Pressione [c] para apagar os dados", score + 1);
             break;
     }
 
