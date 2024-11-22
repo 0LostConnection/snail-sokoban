@@ -1,45 +1,71 @@
 @echo off
+:: https://stackoverflow.com/questions/21660249/how-do-i-make-one-particular-line-of-a-batch-file-a-different-color-then-the-oth
 setlocal enabledelayedexpansion
+for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1) do     rem"') do (
+  set "DEL=%%a"
+)
 
 :: Definindo diretórios
-set BIN_DIR=%CD%\build\bin
-set SRC_DIR=%CD%\src
-set MAP_DIR=%SRC_DIR%\maps
+set BUILD_BIN_DIR=%CD%\build\bin
+set BUILD_MAPS_DIR=%BUILD_BIN_DIR%\maps
 
-:: Criação do diretório bin, caso não exista
-if not exist %BIN_DIR% (
-    mkdir %BIN_DIR%
+set SRC_DIR=%CD%\src
+set SRC_MAPS_DIR=%SRC_DIR%\maps
+
+:: Criação dos diretórios bin e maps, caso não existam
+if not exist %BUILD_BIN_DIR% (
+    mkdir %BUILD_BIN_DIR%
+)
+if not exist %BUILD_MAPS_DIR% (
+    mkdir %BUILD_MAPS_DIR%
 )
 
 :: Compilando os arquivos de fase
-echo Compiling map generators...
-for %%F in (%MAP_DIR%\*.c) do (
+call :color 02 "[MAPAS] Compilando os geradores dos mapas..."
+echo.
+for %%F in (%SRC_MAPS_DIR%\*.c) do (
     set MAP_FILE=%%F
     set MAP_NAME=%%~nF
-    echo Compiling !MAP_NAME!_gen...
-    gcc -o %BIN_DIR%\!MAP_NAME!_gen !MAP_FILE! -lncurses
+    call :color 09 "[MAPAS] Compilando !MAP_NAME!_gen..."
+    echo.
+    gcc -o %BUILD_MAPS_DIR%\!MAP_NAME!_gen !MAP_FILE!
 )
 
 :: Gerando os arquivos .dat com os executáveis das fases
-echo Generating map files...
-for %%F in (%BIN_DIR%\* _gen) do (
+echo.
+call :color 02 "[MAPAS] Gerando os arquivos binarios dos mapas..."
+echo.
+for %%F in (%BUILD_MAPS_DIR%\*_gen.exe) do (
     if exist %%F (
-        echo Running %%F to generate the map...
-        pushd %BIN_DIR%
-        %%F
+        call :color 09 "[MAPAS] Rodando %%~nF para gerar o mapa..."
+        echo.
+        pushd %BUILD_MAPS_DIR%
+        %%~nF
         popd
     )
 )
 
-:: Compilando o jogo
-echo Compiling snail_sokoban...
-gcc -o %BIN_DIR%\snail_sokoban %SRC_DIR%\*.c -lncurses
-
 :: Limpando os executáveis temporários
-echo Cleaning map executables...
-del %BIN_DIR%\*_gen.exe
+echo.
+call :color 02 "[MAPAS] Limpando executaveis dos mapas..."
+echo.
+del %BUILD_MAPS_DIR%\*_gen.exe
 
-echo Build complete.
+:: Compilando o jogo
+echo.
+call :color 06 "[JOGO] Compilando snail_sokoban..."
+echo.
+gcc -o %BUILD_BIN_DIR%\snail_sokoban %SRC_DIR%\*.c -lncurses
 
-:: pause
-endlocal
+echo.
+call :color 0F "Build finalizado!"
+echo.
+
+pause
+exit
+
+:color
+echo off
+<nul set /p ".=%DEL%" > "%~2"
+findstr /v /a:%1 /R "^$" "%~2" nul
+del "%~2" > nul 2>&1i

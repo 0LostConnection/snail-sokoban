@@ -8,7 +8,7 @@
 Map init_map(int current_level) {
     // Cria o caminho do arquivo com o número da fase
     char file_path[20];
-    sprintf(file_path, "fase%d.dat", current_level);
+    sprintf(file_path, "maps/fase%d.dat", current_level);
 
     FILE *file = fopen(file_path, "rb");
     if (!file) return NULL;

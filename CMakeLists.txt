@@ -3,8 +3,9 @@ project(snail_sokoban C)
 
 set(CMAKE_C_STANDARD 11)
 
-# Define o diretório de saída para os executáveis
+# Define os diretórios de saída para os executáveis e mapas
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(MAPS_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/maps)
 
 # Localize os arquivos de fases na pasta maps
 file(GLOB MAP_SOURCES "src/maps/*.c")
@@ -16,8 +17,8 @@ add_compile_options(-Wall)
 if(WIN32)
         # Defina manualmente os diretórios de include e biblioteca de ncurses
         include_directories("C:/MinGW/include/ncurses")  # Altere para o caminho correto do seu ncurses
-        link_directories("C:/MinGW/lib")  # Altere para o caminho correto da biblioteca ncurses
-        set(CURSES_LIBRARIES ncurses)     # Defina o nome da biblioteca
+        link_directories("C:/MinGW/lib")                # Altere para o caminho correto da biblioteca ncurses
+        set(CURSES_LIBRARIES ncurses)                   # Defina o nome da biblioteca
 else()
         # Linux ou outros sistemas podem usar o find_package normalmente
         find_package(Curses REQUIRED)
@@ -29,6 +30,8 @@ endif()
 add_executable(snail_sokoban ${MAIN_SOURCES})
 target_link_libraries(snail_sokoban ${CURSES_LIBRARIES})
 
+# Cria o diretório para os mapas, caso não exista
+file(MAKE_DIRECTORY ${MAPS_OUTPUT_DIRECTORY})
 
 # Adiciona uma regra personalizada para gerar os arquivos .dat das fases
 add_custom_target(generate_maps ALL
@@ -40,9 +43,11 @@ foreach(MAP_SOURCE ${MAP_SOURCES})
         get_filename_component(MAP_NAME ${MAP_SOURCE} NAME_WE)
         add_executable(${MAP_NAME}_gen ${MAP_SOURCE})
         add_dependencies(generate_maps ${MAP_NAME}_gen)
+
+        # Configura o gerador de mapas para salvar os arquivos .dat na subpasta bin/maps
         add_custom_command(TARGET ${MAP_NAME}_gen POST_BUILD
                 COMMAND $<TARGET_FILE:${MAP_NAME}_gen>
-                WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin
+                WORKING_DIRECTORY ${MAPS_OUTPUT_DIRECTORY}
                 COMMENT "Generating map: ${MAP_NAME}.dat"
         )
 endforeach()

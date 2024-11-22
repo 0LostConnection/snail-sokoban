@@ -1,61 +1,89 @@
 @echo off
 setlocal enabledelayedexpansion
+:: https://stackoverflow.com/questions/21660249/how-do-i-make-one-particular-line-of-a-batch-file-a-different-color-then-the-oth
+setlocal enabledelayedexpansion
+for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1) do     rem"') do (
+  set "DEL=%%a"
+)
+color 0F
 
 :: Definindo diretórios
-set BIN_DIR=%CD%\build\bin
+set BUILD_BIN_DIR=%CD%\build\bin
+set BUILD_MAPS_DIR=%BUILD_BIN_DIR%\maps
+
 set SRC_DIR=%CD%\src
-set MAP_DIR=%SRC_DIR%\maps
+set SRC_MAPS_DIR=%SRC_DIR%\maps
 
 :: Solicitar o número da fase ao usuário
-set /p PHASE="Enter the phase number to compile and execute (1-10): "
+set /p PHASE="Digite o numero da fase (1-10): "
 
 :: Verificar se o número da fase é válido
 if %PHASE% lss 1 (
-    echo Invalid phase number. Must be between 1 and 10.
+    call :color 0C "Numero invalido, precisa ser entre 1 e 10!"
+    echo.
     goto :end
 )
 
 if %PHASE% gtr 10 (
-    echo Invalid phase number. Must be between 1 and 10.
+    call :color 0C "Numero invalido, precisa ser entre 1 e 10!"
+    echo.
     goto :end
 )
 
+echo.
 :: Mapear o nome do arquivo da fase
 set /a PHASE_INDEX=%PHASE%-1
-set MAP_FILE=%MAP_DIR%\fase%PHASE_INDEX%.c
+set MAP_FILE=%SRC_MAPS_DIR%\fase%PHASE_INDEX%.c
 set MAP_NAME=fase%PHASE_INDEX%
 
 if not exist !MAP_FILE! (
-    echo Phase file !MAP_FILE! does not exist.
+    call :color 0C "O arquivo de mapa !MAP_FILE! não existe!"
+    echo.
     goto :end
 )
 
-:: Criação do diretório bin, caso não exista
-if not exist %BIN_DIR% (
-    mkdir %BIN_DIR%
+:: Criação dos diretórios bin e maps, caso não existam
+if not exist %BUILD_BIN_DIR% (
+    mkdir %BUILD_BIN_DIR%
+)
+if not exist %BUILD_MAPS_DIR% (
+    mkdir %BUILD_MAPS_DIR%
 )
 
 :: Compilar o arquivo da fase selecionada
-echo Compiling !MAP_NAME!_gen...
-gcc -o %BIN_DIR%\!MAP_NAME!_gen !MAP_FILE! -lncurses
+
+call :color 02 "Compilando !MAP_NAME!_gen..."
+echo.
+gcc -o %BUILD_MAPS_DIR%\!MAP_NAME!_gen !MAP_FILE! -lncurses
 
 :: Executar o gerador da fase
-if exist %BIN_DIR%\!MAP_NAME!_gen.exe (
-    echo Running !MAP_NAME!_gen to generate the map...
-    pushd %BIN_DIR%
+if exist %BUILD_MAPS_DIR%\!MAP_NAME!_gen.exe (
+    call :color 09 "Rodando !MAP_NAME!_gen para gerar o mapa..."
+    echo.
+    pushd %BUILD_MAPS_DIR%
     !MAP_NAME!_gen
     popd
 ) else (
-    echo Failed to compile or find !MAP_NAME!_gen.
+    call :color 0C "Falha ao compilar ou encontrar !MAP_NAME!_gen"
+    echo.
     goto :end
 )
 
 :: Limpar o executável temporário da fase
-echo Cleaning map executable...
-del %BIN_DIR%\!MAP_NAME!_gen.exe
+call :color 02 "Limpando executavel do mapa..."
+echo.
+del %BUILD_MAPS_DIR%\!MAP_NAME!_gen.exe
 
-echo Build for phase %PHASE% complete.
+echo.
+call :color 06 "Mapa para a fase %PHASE% gerado"
+echo.
 
 :end
-:: pause
-endlocal
+pause
+exit
+
+:color
+echo off
+<nul set /p ".=%DEL%" > "%~2"
+findstr /v /a:%1 /R "^$" "%~2" nul
+del "%~2" > nul 2>&1i
