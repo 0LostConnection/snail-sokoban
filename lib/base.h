@@ -6,25 +6,30 @@
 #define Bool bool
 
 typedef enum LEVELS {
-    TITLE_LEVEL = 0,
-    FIRST_LEVEL = 1,
-    SECOND_LEVEL = 2,
-    THIRD_LEVEL = 3,
-    FOURTH_LEVEL = 4,
-    FIFTH_LEVEL = 5,
-    MAX_LEVEL = 5
+    TITLE_LEVEL = -1,
+    FIRST_LEVEL = 0,
+    SECOND_LEVEL = 1,
+    THIRD_LEVEL = 2,
+    FOURTH_LEVEL = 3,
+    FIFTH_LEVEL = 4,
+    SIXTH_LEVEL = 5,
+    SEVENTH_LEVEL = 6,
+    EIGHT_LEVEL = 7,
+    NINE_LEVEL = 8,
+    TENTH_LEVEL = 9,
+    MAX_LEVEL = 9
 } LEVELS;
 
 
 typedef enum Command {
-    UP = 'w',       ///< w: up
-    LEFT = 'a',     ///< a: left
-    DOWN = 's',     ///< s: down
-    RIGHT = 'd',    ///< d: right
-    RESTART = 'r',  ///< r: restart
-    QUIT = 'q',     ///< q: quit
-    CLEAR = 'c',    ///< c: clear
-    CONTINUE = 'w'  ///< w: continue
+    UP = 'w', ///< w: up
+    LEFT = 'a', ///< a: left
+    DOWN = 's', ///< s: down
+    RIGHT = 'd', ///< d: right
+    RESTART = 'r', ///< r: restart
+    QUIT = 'q', ///< q: quit
+    CLEAR = 'c', ///< c: clear
+    CONTINUE = 'w' ///< w: continue
 } Command;
 
 #define TC_NRM  "\033[0m"

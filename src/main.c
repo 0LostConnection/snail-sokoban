@@ -68,6 +68,22 @@ int main() {
         case '5':
             current_level = FIFTH_LEVEL;
             break;
+        case '6':
+            current_level = SIXTH_LEVEL;
+            break;
+        case '7':
+            current_level = SEVENTH_LEVEL;
+            break;
+        case '8':
+            current_level = EIGHT_LEVEL;
+            break;
+        case '9':
+            current_level = NINE_LEVEL;
+            break;
+        case '0':
+            current_level = TENTH_LEVEL;
+            break;
+
         case CLEAR:
             score = TITLE_LEVEL;
             save_score(score);
@@ -90,7 +106,7 @@ int main() {
 
     clear_screen();
     map = init_map(current_level);
-    
+
     while (!quit) {
         initscr();
         cbreak();
@@ -100,11 +116,11 @@ int main() {
         display_map(map);
 
         char level_header[20];
-        sprintf(level_header, "Level %d", current_level);
+        sprintf(level_header, "Level %d", current_level + 1);
         print_header(level_header, cols, rows);
 
         char level_footer[100];
-        sprintf(level_footer, "Maximo: %d", score);
+        sprintf(level_footer, "Maximo: %d", score + 1);
         print_footer(level_footer, cols, rows, map->height);
 
         input = getchar();
@@ -160,8 +176,7 @@ int main() {
                 free_map(map);
                 break;
             }
-
-
+            
             clear_screen();
 
             print_header("Voce venceu! Deseja ir para a proxima fase ou sair? [q]", cols, rows);

@@ -40,4 +40,6 @@ echo Cleaning map executables...
 del %BIN_DIR%\*_gen.exe
 
 echo Build complete.
+
+pause
 endlocal

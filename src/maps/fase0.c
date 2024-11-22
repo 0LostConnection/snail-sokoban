@@ -1,25 +1,24 @@
 #include <stdio.h>
 
 #define HEIGHT 10
-#define WIDTH 15
-#define PLAYER_X 3
-#define PLAYER_Y 3
+#define WIDTH 20
+#define PLAYER_X 2
+#define PLAYER_Y 2 
 
 int main() {
     char grid[HEIGHT][WIDTH] = {
-        "###############",
-        "#   #   O     #",
-        "#   #   ###   #",
-        "# P   C       #",
-        "#   #######   #",
-        "#       #     #",
-        "#   C   #     #",
-        "#   ### O   C #",
-        "#   O         #",
-        "###############"
+        "####################",
+        "##                ##",
+        "##        x       ##",
+        "##       ####     ##",
+        "##   x   ##  o    ##",
+        "##       ##       ##",
+        "##       ####     ##",
+        "##           o    ##",
+        "####################"
     };
 
-    FILE *file = fopen("fase5.dat", "wb");
+    FILE *file = fopen("fase0.dat", "wb");
 
     const int width = WIDTH;
     const int height = HEIGHT;
