@@ -55,7 +55,7 @@ del %BUILD_MAPS_DIR%\*_gen.exe
 echo.
 call :color 06 "[JOGO] Compilando snail_sokoban..."
 echo.
-gcc -o %BUILD_BIN_DIR%\snail_sokoban %SRC_DIR%\*.c -lncurses
+gcc -o %BUILD_BIN_DIR%\snail_sokoban %SRC_DIR%\*.c my.res -lncurses
 
 echo.
 call :color 0F "Build finalizado!"
