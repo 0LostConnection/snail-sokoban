@@ -18,6 +18,7 @@ void move_cursor(int x, int y) {
 void get_cols_rows(int *cols, int *rows) {
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+    
     *cols = csbi.srWindow.Right - csbi.srWindow.Left + 1;
     *rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
 }
@@ -40,6 +41,6 @@ void show_cursor(bool flag) {
     CONSOLE_CURSOR_INFO cursorInfo;
 
     GetConsoleCursorInfo(out, &cursorInfo);
-    cursorInfo.bVisible = flag; // set the cursor visibility
+    cursorInfo.bVisible = flag;
     SetConsoleCursorInfo(out, &cursorInfo);
 }
