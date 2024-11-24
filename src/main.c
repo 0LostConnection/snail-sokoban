@@ -84,7 +84,7 @@ int main() {
         case '8':
             current_level = NINE_LEVEL;
             break;
-        case '0':
+        case '9':
             current_level = TENTH_LEVEL;
             break;
         case CLEAR:
