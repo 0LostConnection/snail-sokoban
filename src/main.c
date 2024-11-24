@@ -87,6 +87,13 @@ int main() {
             case '0':
                 current_level = TENTH_LEVEL;
                 break;
+            case CONTINUE:
+                if (score != TITLE_LEVEL) {
+                    current_level = score;
+                } else {
+                    current_level = FIRST_LEVEL;
+                }
+                break;
             case CLEAR:
                 score = TITLE_LEVEL;
                 save_score(score);
