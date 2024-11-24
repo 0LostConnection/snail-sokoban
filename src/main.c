@@ -185,7 +185,7 @@ int main() {
                 current_level++;
 
                 if (current_level > MAX_LEVEL) {
-                    end_game("You Win!");
+                    end_game("Voce Venceu!");
                     quit_level = true;
                 } else {
                     clear_screen();
