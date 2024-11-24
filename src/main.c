@@ -197,7 +197,7 @@ int main() {
 
         free_map(map);
     }
-
+    clear_screen();
     endwin();
     return 0;
 }
