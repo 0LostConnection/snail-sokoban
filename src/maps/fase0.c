@@ -1,9 +1,9 @@
 #include <stdio.h>
 
-#define HEIGHT 10
+#define HEIGHT 9
 #define WIDTH 20
 #define PLAYER_X 2
-#define PLAYER_Y 2 
+#define PLAYER_Y 2
 
 int main() {
     char grid[HEIGHT][WIDTH] = {
