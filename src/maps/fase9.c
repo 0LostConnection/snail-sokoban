@@ -1,13 +1,12 @@
 #include <stdio.h>
 
-#define HEIGHT 19
+#define HEIGHT 18
 #define WIDTH 40
 #define PLAYER_X 4
 #define PLAYER_Y 6
 
 int main() {
     char grid[HEIGHT][WIDTH] = {
-        "########################################",
         "########################################",
         "##     ##           ##       ##       ##",
         "##  x  ##   o       ##     x ##   o   ##",
