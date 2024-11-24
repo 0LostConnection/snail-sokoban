@@ -1,13 +1,12 @@
 #include <stdio.h>
 
-#define HEIGHT 15
+#define HEIGHT 13
 #define WIDTH 39
 #define PLAYER_X 4
 #define PLAYER_Y 6
 
 int main() {
     char grid[HEIGHT][WIDTH] = {
-        "#######################################",
         "#######################################",
         "##       ##        o  ##        x   o##",
         "##    x               ##         x   ##",
@@ -21,7 +20,6 @@ int main() {
         "##   ###  x   ##################     ##",
         "##  o###                 ##o        o##",
         "#######################################",
-        "#######################################"
     };
 
     FILE *file = fopen("fase3.dat", "wb");

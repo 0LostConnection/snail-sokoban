@@ -2,7 +2,6 @@
 #define OPERATION_H
 
 #include "map.h"
-#include "player.h"
 #include "base.h"
 
 void move_player(Map map, Command d);

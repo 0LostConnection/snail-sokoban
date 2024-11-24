@@ -1,5 +1,5 @@
 #include "../lib/base.h"
-#include "../lib/command.h"
+#include "../lib/operation.h"
 #include "../lib/map.h"
 #include "../lib/score.h"
 
@@ -90,8 +90,7 @@ int main() {
             case CLEAR:
                 score = TITLE_LEVEL;
                 save_score(score);
-                current_level = FIRST_LEVEL;
-                break;
+                continue;
             case QUIT:
                 quit_game = true;
                 continue;

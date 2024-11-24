@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define HEIGHT 15
+#define HEIGHT 14
 #define WIDTH 29
 #define PLAYER_X 4
 #define PLAYER_Y 8
@@ -21,7 +21,6 @@ int main() {
         "##   ## x    ##    o   ##  ##",
         "##     ####      ####      ##",
         "#############################",
-        "#############################"
     };
 
     FILE *file = fopen("fase4.dat", "wb");

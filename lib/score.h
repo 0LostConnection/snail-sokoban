@@ -7,4 +7,4 @@ int load_score();
 
 void save_score(LEVELS unlocked_level);
 
-#endif //SCORE_H
+#endif

@@ -69,10 +69,13 @@ void move_cursor(int x, int y);
 // Função para obter tamanho do terminal no Windows
 void get_cols_rows(int *cols, int *rows);
 
+// Função para imprimir o título
 void print_header(char *message, int cols, int rows);
 
+// Função para imprimir o rodapé
 void print_footer(char *message, int cols, int rows, int map_height);
 
+// Função para ativar/desativar o cursor
 void show_cursor(bool flag);
 
 #endif
