@@ -54,32 +54,34 @@ int main() {
         cbreak();
         input = getchar();
 
+        //Input para escolher o mapa.
+        //Fiz a correção do input, não estava sendo possível escolher o mapa 10. 
         switch (input) {
-        case '1':
+        case '0':
             current_level = FIRST_LEVEL;
             break;
-        case '2':
+        case '1':
             current_level = SECOND_LEVEL;
             break;
-        case '3':
+        case '2':
             current_level = THIRD_LEVEL;
             break;
-        case '4':
+        case '3':
             current_level = FOURTH_LEVEL;
             break;
-        case '5':
+        case '4':
             current_level = FIFTH_LEVEL;
             break;
-        case '6':
+        case '5':
             current_level = SIXTH_LEVEL;
             break;
-        case '7':
+        case '6':
             current_level = SEVENTH_LEVEL;
             break;
-        case '8':
+        case '7':
             current_level = EIGHT_LEVEL;
             break;
-        case '9':
+        case '8':
             current_level = NINE_LEVEL;
             break;
         case '0':
