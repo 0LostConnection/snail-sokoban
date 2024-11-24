@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define HEIGHT 15
+#define HEIGHT 11
 #define WIDTH 30
 #define PLAYER_X 6
 #define PLAYER_Y 6
