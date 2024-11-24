@@ -3,7 +3,7 @@
 #define HEIGHT 15
 #define WIDTH 39
 #define PLAYER_X 4
-#define PLAYER_Y 4
+#define PLAYER_Y 3
 
 int main() {
     char grid[HEIGHT][WIDTH] = {
